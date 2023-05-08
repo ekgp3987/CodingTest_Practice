@@ -12,7 +12,6 @@ int solution(vector<vector<int> > maps)
     int m = maps[0].size(); 
     
     int visit[101][101] ={};
-    int count = 1;
     
     queue<pair<int,int>> que;
     que.push({0,0}); // 시작점
@@ -42,7 +41,6 @@ int solution(vector<vector<int> > maps)
             // 길
             if(maps[NextX][NextY] == 1)
             {
-                count++;
                 maps[NextX][NextY] = maps[x][y] + 1;
                 que.push({NextX, NextY});
                 visit[NextX][NextY] = 1;
