@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -6,10 +5,6 @@ using namespace std;
 
 int N;
 string board[65];
-int cnt[2]; // 0, 1 로 채워진 종이 갯수
-// cnt[0] 이 -1, cnt[1] 이 0, cnt[2] 이 1
-
-// 함수 : (x,y) 부터 n길이까지의 내부가 다르면 9등분 해서 다시 (x,y) 내부 판별
 
 int now = 0;
 int check(int x, int y, int n)
