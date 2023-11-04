@@ -8,29 +8,21 @@ int num[15];
 int arr[15];
 
 bool isused[15];
-void func(int k)
+void func(int k, int cur)
 {
 	if (k == 6)
 	{
 		for (int i = 0; i < 6; ++i)
-		{
 			cout << num[arr[i]]  << ' ';
-		}
+
 		cout << "\n";
 		return;
 	}
 
-	int st = 0;
-	if (k != 0) st = arr[k - 1] + 1;
-	for (int i = st; i < n; ++i)
+	for (int i = cur; i < n; ++i)
 	{
-		if (!isused[i])
-		{
-			isused[i] = true;
-			arr[k] = i;
-			func(k + 1);
-			isused[i] = false;
-		}
+		arr[k] = i;
+		func(k + 1, i+1);
 	}
 }
 
@@ -48,7 +40,7 @@ int main()
 			cin >> num[i];
 
 		sort(num, num + n);
-		func(0);
+		func(0,0);
 
 		cout << '\n';
 	}
