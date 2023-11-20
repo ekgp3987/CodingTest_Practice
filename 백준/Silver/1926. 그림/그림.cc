@@ -1,79 +1,73 @@
-
-// #include <bits/stdc++.h>
-#include <iostream>
-#include <string>
-#include <queue>
-#include <utility>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-#define X first
-#define Y second
+int n, m;
+int board[505][505];
 
-int arr[1000][1000] = {};
-
-bool vis[1000][1000];
-int n, m; // 행의 수, 열의 수
-
-int dx[4] = { 1,0,-1,0 };
-int dy[4] = { 0,1,0,-1 };
-
-
-
+int dx[4] = { 1,-1,0,0 };
+int dy[4] = { 0,0,-1,1 };
 
 int main()
 {
-	ios::sync_with_stdio(0);
+	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 
+
 	cin >> n >> m;
+
+	queue<pair<int, int>> q;
+	queue<pair<int, int>> q2;
 	for (int i = 0; i < n; ++i)
 	{
 		for (int j = 0; j < m; ++j)
 		{
-			cin >> arr[i][j];
+			cin >> board[i][j];
+			if (board[i][j])
+				q.push({ i,j });
 		}
+	}
+
+	if (q.empty())
+	{
+		cout << 0 << '\n' << 0;
+		return 0;
 	}
 
 	int cnt = 0;
-	int mx =0;
-
-	for (int i = 0; i < n; ++i)
+	int maxwidth = 0;
+	while (!q.empty())
 	{
-		for (int j = 0; j < m; ++j)
+		auto curq = q.front(); q.pop();
+		if (board[curq.first][curq.second] == 1)
 		{
-			if (arr[i][j] == 0 || vis[i][j])continue;
 			cnt++;
-
-			queue<pair<int, int>> Q;
-			vis[i][j] = 1;
-			Q.push({ i,j }); // start point
-
-			int area = 0;
-			while (!Q.empty())
-			{
-				area++;
-				pair<int, int> cur = Q.front(); Q.pop();
-
-				for (int dir = 0; dir < 4; dir++)
-				{
-					int nx = cur.X + dx[dir];
-					int ny = cur.Y + dy[dir];
-
-					if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-					if (vis[nx][ny] || arr[nx][ny] != 1) continue;
-
-					vis[nx][ny] = 1;
-					Q.push({ nx,ny });
-				}
-			}
-
-			mx = max(area, mx);
+			q2.push(curq);
 		}
+
+		int width =1;
+		while (!q2.empty())
+		{
+			auto curq2 = q2.front(); q2.pop();
+			
+			for (int dir = 0; dir < 4; ++dir)
+			{
+				int nx = curq2.first + dx[dir];
+				int ny = curq2.second + dy[dir];
+
+				if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+				if (nx == curq.first && ny == curq.second) continue;
+				if (board[nx][ny] !=1) continue;
+
+				q2.push({ nx,ny });
+				width++;
+				board[nx][ny] = board[curq2.first][curq2.second] + 1;
+			}
+	
+		}
+		maxwidth = max(maxwidth, width);
 	}
 
-	cout << cnt << '\n';
-	cout <<  mx;
-
+	cout << cnt << '\n' << maxwidth;
 	return 0;
 }
