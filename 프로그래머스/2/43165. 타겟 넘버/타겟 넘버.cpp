@@ -2,8 +2,9 @@
 
 using namespace std;
 
-int goal =0; 
-int cnt = 0;
+int goal = 0; 
+int cnt  = 0;
+
 void dfs(vector<int>& numbers,int idx, int now)
 {
     if(idx >= numbers.size())
@@ -12,15 +13,16 @@ void dfs(vector<int>& numbers,int idx, int now)
         return;
     }
 
+    // 갈리는 경우는 +이냐, -이냐 뿐이다. 
     dfs(numbers,idx+1,now-numbers[idx] );
     dfs(numbers,idx+1,now+numbers[idx] );
 }
 
 int solution(vector<int> numbers, int target) {
-    int answer = 0;
+
     goal = target;
 
-    dfs(numbers,0, 0);
+    dfs(numbers, 0, 0); // numbers, index, now sum
 
     return cnt;
 }
